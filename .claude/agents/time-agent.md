@@ -1,18 +1,7 @@
 ---
 name: time-agent
 description: Use this agent to display the current time in Pakistan Standard Time (PKT, UTC+5).
-allowedTools:
-  - "Bash(*)"
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Glob"
-  - "Grep"
-  - "WebFetch(*)"
-  - "WebSearch(*)"
-  - "Agent"
-  - "NotebookEdit"
-  - "mcp__*"
+tools: Bash
 model: haiku
 maxTurns: 3
 ---

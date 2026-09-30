@@ -1,18 +1,7 @@
 ---
 name: weather-agent
 description: Use this agent PROACTIVELY when you need to fetch weather data for Dubai, UAE. This agent fetches real-time temperature from Open-Meteo using its preloaded weather-fetcher skill.
-allowedTools:
-  - "Bash(*)"
-  - "Read"
-  - "Write"
-  - "Edit"
-  - "Glob"
-  - "Grep"
-  - "WebFetch(*)"
-  - "WebSearch(*)"
-  - "Agent"
-  - "NotebookEdit"
-  - "mcp__*"
+tools: WebFetch, Read, Write, Edit
 model: sonnet
 color: green
 maxTurns: 5
