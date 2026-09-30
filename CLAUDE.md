@@ -17,18 +17,9 @@ A demonstration of two distinct skill patterns via the **Command → Agent → S
 
 Two skill patterns: agent skills (preloaded via `skills:` field) vs skills (invoked via `Skill` tool). See `orchestration-workflow/orchestration-workflow.md` for the complete flow diagram.
 
-### Skill Definition Structure
-Skills in `.claude/skills/<name>/SKILL.md` use YAML frontmatter:
-- `name`: Display name and `/slash-command` (defaults to directory name)
-- `description`: When to invoke (recommended for auto-discovery)
-- `argument-hint`: Autocomplete hint (e.g., `[issue-number]`)
-- `disable-model-invocation`: Set `true` to prevent automatic invocation
-- `user-invocable`: Set `false` to hide from `/` menu (background knowledge only)
-- `allowed-tools`: Tools allowed without permission prompts when skill is active
-- `model`: Model to use when skill is active
-- `context`: Set to `fork` to run in isolated subagent context
-- `agent`: Subagent type for `context: fork` (default: `general-purpose`)
-- `hooks`: Lifecycle hooks scoped to this skill
+### Skill & Subagent Frontmatter
+Frontmatter reference: `best-practice/claude-skills.md`, `best-practice/claude-subagents.md`.
+Gotcha: skills use `allowed-tools`; subagents use `tools` (not `allowedTools`). Copy field names from the reference, not from existing agent files.
 
 ### Presentation System
 See `.claude/rules/presentation.md` — all presentation work is delegated to the `presentation-curator` agent.
@@ -51,24 +42,6 @@ Invoke subagents with the Agent tool (renamed from Task in v2.1.63; `Task(...)` 
 ```
 Agent(subagent_type="agent-name", description="...", prompt="...", model="haiku")
 ```
-
-### Subagent Definition Structure
-Subagents in `.claude/agents/*.md` use YAML frontmatter:
-- `name`: Subagent identifier
-- `description`: When to invoke (use "PROACTIVELY" for auto-invocation)
-- `tools`: Comma-separated allowlist of tools (inherits all if omitted). Supports `Agent(agent_type)` syntax
-- `disallowedTools`: Tools to deny, removed from inherited or specified list
-- `model`: Model alias: `haiku`, `sonnet`, `opus`, or `inherit` (default: `inherit`)
-- `permissionMode`: Permission mode (e.g., `"acceptEdits"`, `"plan"`, `"bypassPermissions"`)
-- `maxTurns`: Maximum agentic turns before the subagent stops
-- `skills`: List of skill names to preload into agent context
-- `mcpServers`: MCP servers for this subagent (server names or inline configs)
-- `hooks`: Lifecycle hooks scoped to this subagent (all hook events are supported; `PreToolUse`, `PostToolUse`, and `Stop` are the most common)
-- `memory`: Persistent memory scope — `user`, `project`, or `local` (see `reports/claude-agent-memory.md`)
-- `background`: Set to `true` to always run as a background task
-- `effort`: Effort level override: `low`, `medium`, `high`, `max` (default: inherits from session)
-- `isolation`: Set to `"worktree"` to run in a temporary git worktree
-- `color`: CLI output color for visual distinction
 
 ### Configuration Hierarchy
 1. **Managed** (`managed-settings.json` / MDM plist / Registry): Organization-enforced, cannot be overridden
