@@ -19,7 +19,6 @@ Use the Task tool to invoke the weather agent:
 - subagent_type: weather-agent
 - description: Fetch Dubai weather data
 - prompt: Fetch the current temperature for Dubai, UAE in [unit requested by user]. Return the numeric temperature value and unit. The agent has a preloaded skill (weather-fetcher) that provides the detailed instructions.
-- model: haiku
 
 Wait for the agent to complete and capture the returned temperature value and unit.
 
