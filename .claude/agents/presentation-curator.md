@@ -1,6 +1,6 @@
 ---
 name: presentation-curator
-description: PROACTIVELY use this agent whenever the user wants to update, modify, or fix the presentation slides, structure, styling, or weights
+description: PROACTIVELY use this agent whenever the user wants to update, modify, or fix the presentation slides, structure, styling, or levels
 tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch
 model: sonnet
 color: magenta
@@ -34,7 +34,7 @@ Based on the request:
 - **Content changes**: Edit slide HTML within existing `<div class="slide">` elements
 - **New slides**: Insert new slide divs with correct `data-slide` numbering
 - **Reorder**: Move slide divs and renumber all `data-slide` attributes sequentially
-- **Level changes**: Update `data-level` attributes on section-divider slides (3 transition points in main presentation: Low at slide 10, Medium at slide 18, High at slide 29; Part 6 at slide 34 also uses `high` — the presentation caps at High, not Pro)
+- **Level changes**: Update `data-level` attributes on section-divider slides (3 transition points in main presentation: Low at slide 10, Medium at slide 18, High at slide 29; Part 6 at slide 34 also uses `high`)
 - **Styling changes**: Update CSS within the `<style>` block, matching existing patterns
 
 ### Step 3: Match Styling (presentation-styling skill)
@@ -48,7 +48,7 @@ Follow the presentation-styling skill to ensure:
 
 After changes, verify:
 1. All `data-slide` attributes are sequential (1, 2, 3, ...)
-2. `data-level` transitions exist at section dividers: slide 10 (`low`), 18 (`medium`), 29 (`high`), 34 (`high`) — the main presentation caps at High, not Pro
+2. `data-level` transitions exist at section dividers: slide 10 (`low`), 18 (`medium`), 29 (`high`), 34 (`high`)
 3. No duplicate slide numbers exist
 4. The `totalSlides` JS variable matches the actual count (it's auto-computed from DOM)
 5. Any `goToSlide()` calls in the TOC point to correct slide numbers
@@ -60,9 +60,9 @@ After changes, verify:
 11. If slide 32 is touched, ensure skill frontmatter coverage includes `context: fork`
 12. Keep the framework skill identity canonical: `presentation/vibe-to-agentic-framework` (do not rename to variants)
 
-### Step 5: Self-Evolution (after every execution)
+### Step 5: Self-Evolution (when structure changed)
 
-After completing changes to the presentation, you MUST update your own knowledge to stay in sync. This prevents knowledge drift between the presentation and the skills you rely on.
+If your change altered slide numbering, level transitions, section ranges, or introduced/removed a concept, update the skills below so they match the presentation. For content-only edits that leave these unchanged, skip 5a–5b.
 
 #### 5a. Update the Framework Skill
 
@@ -103,7 +103,6 @@ _Findings from previous executions are recorded here. Add new entries as bullet 
 - Keep the framework skill name stable as `vibe-to-agentic-framework` to avoid broken skill references.
 - When updating slide 2 (TodoApp structure) to show before/after comparison, the `.two-col` layout works well with centered h3 headers using inline styles for red/green color coding. Update framework skill's Part 0 description and TodoApp example section to reflect the new before/after structure.
 - The journey bar was refactored from a percentage-based system (`data-weight` attributes summing to 100%) to a 4-level system (`data-level` attributes: low/medium/high/pro). The `.journey-track-wrap` wrapper div is required to display the ticks column alongside the bar without being clipped by `overflow: hidden`. The level transitions in the main presentation are at section dividers only (slides 10, 18, 29, 34). The video presentation (`!/video-presentation-transcript/1-video-workflow.html`) uses the same system with its own level transitions at slides 2 (low) and 7 (medium).
-- The main presentation caps at **High** level (not Pro). Slide 34 uses `data-level="high"`. The Pro tick on the journey bar remains as a visual scale marker showing the theoretical ceiling, but the fill never reaches it. Do not assign `data-level="pro"` to any slide in the main presentation.
 - Journey bar top/bottom labels (`journey-label-top` / `journey-label-bottom`) were removed from both presentation files. The current-level indicator now uses the format `Current = <strong>Level</strong>` rendered via `innerHTML` in the JS `updateJourneyBar` function. The `journey-level-label` CSS class was updated to use lighter, smaller styling (font-weight: 400, font-size: 0.65rem, color: #777) since the label word is now light and only the bold `<strong>` element is accented.
 
 ## Critical Requirements

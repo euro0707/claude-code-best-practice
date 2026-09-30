@@ -1,6 +1,6 @@
 ---
 name: presentation-structure
-description: Knowledge about the presentation slide format, weight system, navigation, and section structure
+description: Knowledge about the presentation slide format, level system, navigation, and section structure
 ---
 
 # Presentation Structure Skill

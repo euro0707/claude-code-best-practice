@@ -40,19 +40,17 @@ Cross-platform sound notification system in `.claude/hooks/`:
 - `config/hooks-config.local.json`: Personal overrides (git-ignored)
 - `sounds/`: Audio files organized by hook event (generated via ElevenLabs TTS)
 
-Hook events configured in `.claude/settings.json`: PreToolUse, PostToolUse, UserPromptSubmit, Notification, Stop, SubagentStart, SubagentStop, PreCompact, SessionStart, SessionEnd, Setup, PermissionRequest, TeammateIdle, TaskCompleted, ConfigChange.
+Hook events: see the `hooks` key in `.claude/settings.json` for the full, current list.
 
 Special handling: git commits trigger `pretooluse-git-committing` sound.
 
 ## Critical Patterns
 
 ### Subagent Orchestration
-Subagents **cannot** invoke other subagents via bash commands. Use the Agent tool (renamed from Task in v2.1.63; `Task(...)` still works as an alias):
+Invoke subagents with the Agent tool (renamed from Task in v2.1.63; `Task(...)` still works as an alias):
 ```
 Agent(subagent_type="agent-name", description="...", prompt="...", model="haiku")
 ```
-
-Be explicit about tool usage in subagent definitions. Avoid vague terms like "launch" that could be misinterpreted as bash commands.
 
 ### Subagent Definition Structure
 Subagents in `.claude/agents/*.md` use YAML frontmatter:
